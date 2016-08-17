@@ -1,30 +1,9 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE);
-/*****************************************************************************
-/*Copyright (C) 2008 Tony Iha Kazungu
-/*****************************************************************************
-Job Recruitment System (Taifajobs Version 1.0), is an interactive system that enables small to medium
-sized organization keep track of job applications and advertisement.  It could either be uploaded to the internet or used
-on the local intranet.  It keep tracks of job applications and applicants resume.  It can be linked to the HR system as the starting point to 
-shortlisting of candidates.
-
-This program is free software; you can redistribute it and/or modify it under the terms
-of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with this program;
-if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA or 
-check for license.txt at the root folder
-/*****************************************************************************
-For any details please feel free to contact me at taifa@users.sourceforge.net
-Or for snail mail. P. O. Box 938, Kilifi-80108, East Africa-Kenya. Mobile Phone 254-0725-547006
-/*****************************************************************************/
-function db_connect($HOST,$USER,$PASS,$DB,$PORT)
+$host="127.0.0.1"; // Host name  
+$db_name='taifa_jobs';
 {
-	$conn = mysql_connect($HOST . ":" . $PORT , $USER, $PASS);
-	mysql_select_db($DB);
+	$conn=mysqli_connect('127.0.0.1', 'root', '303seminarian', 'taifa_jobs');
+	mysqli_select_db($conn, $db_name) or die("cannot select DB");
 	return $conn;
 }
 
@@ -71,11 +50,11 @@ function error()
 }
 ?>
 <?php
-	define("HOST", "localhost");
+//	define("HOST", "127.0.0.1");
 	define("PORT", 3306);
 	define("USER", "root");
-	define("PASS", "sa");
-	define("DB", "jobs");
+	define("PASS", "303seminarian");
+//	define("DB", "taifa_jobs");
 	define("smptserver",'smtpserver');
 	define("supportemail",'emailadress');
 	define("bcc",'emailaddress');		

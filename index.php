@@ -1,21 +1,24 @@
-<?php // error_reporting(E_ALL ^ E_DEPRECATED);
-//session_start();
-//include_once('includes/queryfunctions.php');
-//include_once('includes/functions.php');
-//$conn=@mysql_connect(HOST . ":" . PORT , USER, PASS);
-//if (!$conn) {
-//    die('Could not connect: ' . mysql_error());
-//}
-//mysql_select_db(DB);
-//
-//if(isset($_POST["submit"]) && $_POST["submit"]=='Search'){
-//
-//	if(isset($_POST["countryid"]) && trim($_POST["countryid"])!=='') $country = "job.countryid=$_POST[countryid] OR";
-//
-//	//criteria for searching
-//	if(isset($_POST["keyword"]) && trim($_POST["keyword"])!=='') $keyword="(job.jobtitle LIKE '%$_POST[keyword]%' OR job.summary LIKE '%$_POST[keyword]%' OR job.description LIKE '%$_POST[keyword]%' OR job.requirements LIKE '%$_POST[keyword]%' OR employer.organization LIKE '%$_POST[keyword]%')";
-//	$where = "WHERE $country $keyword";
-//}
+<?php
+session_start();
+error_reporting(E_ALL & ~E_NOTICE);
+include_once('includes/queryfunctions.php');
+include_once('includes/functions.php');
+$conn=  mysqli_connect('127.0.0.1', 'root', '303seminarian', 'taifa_jobs');
+
+if (!$conn) {
+    die('Could not connect: ' . mysql_error());
+    
+}
+//mysqli_select_db($conn, 'taifa-jobs') or die(mysqli_error($conn));
+
+if(isset($_POST["submit"]) && $_POST["submit"]=='Search'){
+
+	if(isset($_POST["countryid"]) && trim($_POST["countryid"])!=='') $country = "job.countryid=$_POST[countryid] OR";
+        
+	if(isset($_POST["keyword"]) && trim($_POST["keyword"])!=='') $keyword="(job.jobtitle LIKE '%$_POST[keyword]%' OR job.summary LIKE '%$_POST[keyword]%' OR job.description LIKE '%$_POST[keyword]%' OR job.requirements LIKE '%$_POST[keyword]%' OR employer.organization LIKE '%$_POST[keyword]%')";
+	//" AND job.dateclosing <= current_date()";
+	$where = "WHERE $country $keyword";
+}
 ?>
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
@@ -84,3 +87,14 @@
         <script src="js/what-input.js"></script>
     </body>
 </html>
+  <?php
+		if(isset($_GET["list"])) $_SESSION["list"]=$_GET["list"];
+		switch($_SESSION["list"]){
+		case 'vacancies':
+			vacancies($where);
+			break;
+		default:
+			vacancies($where);
+			break;
+		}		
+   ?>
